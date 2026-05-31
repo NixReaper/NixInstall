@@ -1,0 +1,30 @@
+:root {
+  /* Backgrounds — dark navy matching logo's deep-blue stacked layers */
+  --bg-primary:   #060d1a;
+  --bg-secondary: #0d1829;
+  --bg-tertiary:  #162236;
+
+  /* Text */
+  --text-primary:   #e8f4ff;
+  --text-secondary: #7a9bbf;
+
+  /* Accent — cyan → blue, pulled from logo colors */
+  --accent-primary:   #00b8d4;
+  --accent-secondary: #0288d1;
+
+  /* Border */
+  --border-color: #1e3352;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.7);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.8);
+
+  /* Gradient — matches logo's cyan-to-blue */
+  --gradient-primary: linear-gradient(135deg, #00c8f8 0%, #0d6efd 100%);
+
+  /* Glow — cyan tint */
+  --accent-glow-sm: 0 0 0 3px rgba(0, 184, 212, 0.2);
+  --accent-glow-md: 0 4px 20px rgba(0, 184, 212, 0.3);
+  --accent-glow-lg: 0 8px 32px rgba(0, 184, 212, 0.45);
+}
