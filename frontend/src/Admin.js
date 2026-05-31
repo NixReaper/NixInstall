@@ -22,6 +22,12 @@ const Icon = ({ name, size = 18 }) => {
         <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
       </svg>
     ),
+    news: (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+        <path d="M13.73 21a2 2 0 01-3.46 0"/>
+      </svg>
+    ),
     logs: (
       <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
@@ -60,6 +66,7 @@ const Icon = ({ name, size = 18 }) => {
 const NAV_ITEMS = [
   { id: 'dashboard',    label: 'Dashboard',    icon: 'dashboard' },
   { id: 'applications', label: 'Applications', icon: 'applications' },
+  { id: 'news',         label: 'News',         icon: 'news' },
   { id: 'settings',     label: 'Settings',     icon: 'settings' },
   { id: 'logs',         label: 'Logs',         icon: 'logs',   soon: true },
   { id: 'help',         label: 'Help / Docs',  icon: 'help',   soon: true },
@@ -78,6 +85,16 @@ function Admin() {
   const [success,       setSuccess]       = useState('');
   const [activeSection, setActiveSection] = useState('dashboard');
   const [sidebarOpen,   setSidebarOpen]   = useState(false);
+
+  // News
+  const [newsItems,    setNewsItems]    = useState([]);
+  const [newsForm,     setNewsForm]     = useState({ title: '', body: '' });
+  const [showNewsForm, setShowNewsForm] = useState(false);
+
+  // Update checker
+  const [updateResults,   setUpdateResults]   = useState([]);
+  const [checkingUpdates, setCheckingUpdates] = useState(false);
+  const [showUpdates,     setShowUpdates]     = useState(false);
 
   // App form
   const [editingId, setEditingId] = useState(null);
@@ -150,6 +167,85 @@ function Admin() {
     } catch {}
   };
 
+  const loadNews = async () => {
+    try {
+      const res = await fetch(`${API_URL}/admin/news`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` },
+      });
+      if (res.ok) setNewsItems(await res.json());
+    } catch {}
+  };
+
+  const handleAddNews = async (e) => {
+    e.preventDefault();
+    if (!newsForm.title.trim()) return;
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/admin/news`, {
+        method: 'POST',
+        headers: authHeaders(),
+        body: JSON.stringify(newsForm),
+      });
+      if (!res.ok) throw new Error('Failed to post');
+      setSuccess('Announcement posted.');
+      setNewsForm({ title: '', body: '' });
+      setShowNewsForm(false);
+      await loadNews();
+      setTimeout(() => setSuccess(''), 3000);
+    } catch (err) { setError(err.message); }
+    finally { setLoading(false); }
+  };
+
+  const handleDeleteNews = async (id) => {
+    if (!window.confirm('Delete this news item?')) return;
+    try {
+      const res = await fetch(`${API_URL}/admin/news/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` },
+      });
+      if (res.ok) { await loadNews(); setSuccess('Deleted.'); setTimeout(() => setSuccess(''), 2000); }
+    } catch (err) { setError(err.message); }
+  };
+
+  const handleCheckUpdates = async () => {
+    setCheckingUpdates(true);
+    setShowUpdates(true);
+    setUpdateResults([]);
+    setError('');
+    try {
+      const res = await fetch(`${API_URL}/admin/check-updates`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` },
+      });
+      if (!res.ok) throw new Error('Update check failed');
+      const data = await res.json();
+      setUpdateResults(data);
+    } catch (err) { setError(err.message); setShowUpdates(false); }
+    finally { setCheckingUpdates(false); }
+  };
+
+  const handleApplyUpdate = async (appId, newUrl, newVersion, newType) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/admin/apply-update/${appId}`, {
+        method: 'POST',
+        headers: authHeaders(),
+        body: JSON.stringify({ newUrl, newVersion, newType }),
+      });
+      if (!res.ok) throw new Error('Failed to apply');
+      setUpdateResults(prev => prev.filter(r => r.id !== appId));
+      setSuccess(`${appId} updated.`);
+      await loadDashboard();
+      setTimeout(() => setSuccess(''), 3000);
+    } catch (err) { setError(err.message); }
+    finally { setLoading(false); }
+  };
+
+  const handleApplyAll = async () => {
+    for (const r of updateResults) {
+      await handleApplyUpdate(r.id, r.newUrl, r.newVersion, r.newType);
+    }
+  };
+
   const handleSaveApp = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -217,6 +313,7 @@ function Admin() {
     setError('');
     setSuccess('');
     if (id === 'settings') loadSettings();
+    if (id === 'news') loadNews();
   };
 
   const filteredApps = apps.filter(app =>
@@ -386,12 +483,58 @@ function Admin() {
                   />
                 </div>
                 <button
+                  className="btn-secondary"
+                  onClick={handleCheckUpdates}
+                  disabled={checkingUpdates}
+                >
+                  {checkingUpdates ? 'Checking...' : '↻ Check Updates'}
+                </button>
+                <button
                   className="btn-primary"
                   onClick={() => { if (showForm && !editingId) { resetForm(); } else { resetForm(); setShowForm(true); } }}
                 >
                   {showForm && !editingId ? '✕  Cancel' : '+ Add App'}
                 </button>
               </div>
+
+              {/* Update Results Panel */}
+              {showUpdates && (
+                <div className="card update-panel">
+                  <div className="card-title-row">
+                    <div className="card-title">
+                      {checkingUpdates ? 'Checking winget...' : `${updateResults.length} update${updateResults.length !== 1 ? 's' : ''} available`}
+                    </div>
+                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                      {updateResults.length > 1 && !checkingUpdates && (
+                        <button className="btn-primary" onClick={handleApplyAll} disabled={loading}>
+                          Apply All
+                        </button>
+                      )}
+                      <button className="btn-secondary" onClick={() => setShowUpdates(false)}>✕</button>
+                    </div>
+                  </div>
+                  {checkingUpdates && <div className="update-checking">Querying winget package manifests — this may take 15–30 seconds...</div>}
+                  {!checkingUpdates && updateResults.length === 0 && (
+                    <div className="table-empty">All apps are up to date.</div>
+                  )}
+                  {updateResults.map(r => (
+                    <div key={r.id} className="update-row">
+                      <div className="update-info">
+                        <span className="update-name">{r.name}</span>
+                        <span className="update-version">v{r.newVersion}</span>
+                      </div>
+                      <div className="update-url" title={r.newUrl}>{r.newUrl}</div>
+                      <button
+                        className="btn-sm btn-edit"
+                        onClick={() => handleApplyUpdate(r.id, r.newUrl, r.newVersion, r.newType)}
+                        disabled={loading}
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {/* Add / Edit Form */}
               {showForm && (
@@ -508,6 +651,75 @@ function Admin() {
                     </div>
                   ))}
                 </div>
+              </div>
+            </div>
+          )}
+
+          {/* ── News ──────────────────────────────────────── */}
+          {activeSection === 'news' && (
+            <div className="section">
+              <div className="section-toolbar">
+                <div style={{ flex: 1 }} />
+                <button className="btn-primary" onClick={() => setShowNewsForm(f => !f)}>
+                  {showNewsForm ? '✕  Cancel' : '+ New Announcement'}
+                </button>
+              </div>
+
+              {showNewsForm && (
+                <div className="card form-card">
+                  <div className="card-title">New Announcement</div>
+                  <form onSubmit={handleAddNews}>
+                    <div className="form-group">
+                      <label>Title <span className="req">*</span></label>
+                      <input
+                        type="text"
+                        value={newsForm.title}
+                        onChange={(e) => setNewsForm({ ...newsForm, title: e.target.value })}
+                        placeholder="e.g., New apps added: KeePass, Bitwarden"
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Body <span className="opt">(optional)</span></label>
+                      <textarea
+                        value={newsForm.body}
+                        onChange={(e) => setNewsForm({ ...newsForm, body: e.target.value })}
+                        placeholder="Additional details..."
+                        rows={3}
+                        style={{ width: '100%', padding: '0.62rem 0.85rem', border: '1px solid var(--border-color)', borderRadius: '7px', background: 'var(--bg-tertiary)', color: 'var(--text-primary)', fontFamily: 'inherit', fontSize: '0.875rem', resize: 'vertical', boxSizing: 'border-box' }}
+                      />
+                    </div>
+                    <div className="form-actions">
+                      <button type="submit" className="btn-primary" disabled={loading}>Post</button>
+                      <button type="button" className="btn-secondary" onClick={() => setShowNewsForm(false)}>Cancel</button>
+                    </div>
+                  </form>
+                </div>
+              )}
+
+              <div className="card">
+                <div className="card-title-row">
+                  <div className="card-title">All News Items</div>
+                  <span className="count-badge">{newsItems.length}</span>
+                </div>
+                {newsItems.length === 0 ? (
+                  <div className="table-empty">No news yet. App updates and announcements will appear here.</div>
+                ) : (
+                  <div className="news-admin-list">
+                    {newsItems.map(item => (
+                      <div key={item.id} className="news-admin-row">
+                        <span className={`type-badge ${item.type === 'app_update' ? 'type-exe' : 'type-msi'}`}>
+                          {item.type === 'app_update' ? 'Update' : 'Manual'}
+                        </span>
+                        <span className="news-admin-date">
+                          {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </span>
+                        <span className="news-admin-title">{item.title}</span>
+                        <button className="btn-sm btn-delete" onClick={() => handleDeleteNews(item.id)}>Delete</button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           )}

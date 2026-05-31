@@ -11,12 +11,15 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [newsItems, setNewsItems] = useState([]);
+  const [newsOpen, setNewsOpen] = useState(true);
 
   const API_URL = process.env.REACT_APP_API_URL ?? '';
 
   useEffect(() => {
     fetchApps();
     fetchCategories();
+    fetchNews();
   }, []);
 
   const fetchApps = async () => {
@@ -41,6 +44,26 @@ function App() {
     } catch (err) {
       console.error('Error fetching categories:', err);
     }
+  };
+
+  const fetchNews = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/news`);
+      if (!response.ok) return;
+      const data = await response.json();
+      setNewsItems(data);
+    } catch {}
+  };
+
+  const formatNewsDate = (iso) => {
+    const d = new Date(iso);
+    const now = new Date();
+    const diffMs = now - d;
+    const diffDays = Math.floor(diffMs / 86400000);
+    if (diffDays === 0) return 'Today';
+    if (diffDays === 1) return 'Yesterday';
+    if (diffDays < 7) return `${diffDays}d ago`;
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
 
   const toggleApp = (appId) => {
@@ -168,6 +191,32 @@ function App() {
 
       <main className="main">
         <div className="container">
+
+          {/* News section */}
+          {newsItems.length > 0 && (
+            <div className="news-section">
+              <button className="news-toggle" onClick={() => setNewsOpen(o => !o)}>
+                <span className="news-toggle-label">
+                  <span className="news-dot" />
+                  What's New
+                  <span className="news-count">{newsItems.length}</span>
+                </span>
+                <span className="news-chevron">{newsOpen ? '▾' : '▸'}</span>
+              </button>
+              {newsOpen && (
+                <div className="news-list">
+                  {newsItems.slice(0, 5).map(item => (
+                    <div key={item.id} className="news-item">
+                      <span className={`news-type-dot news-type-${item.type}`} />
+                      <span className="news-date">{formatNewsDate(item.date)}</span>
+                      <span className="news-title-text">{item.title}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="step-label">
             1. Pick the apps you want
             <span className="step-count">{visibleAppCount} app{visibleAppCount !== 1 ? 's' : ''}</span>

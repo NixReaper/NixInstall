@@ -6,6 +6,10 @@ const path = require('path');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
+// Winget updater (optional — fails gracefully if unavailable)
+let winget = null;
+try { winget = require('./winget'); } catch (e) { console.warn('winget.js not loaded:', e.message); }
+
 const app = express();
 
 app.use(cors());
@@ -13,6 +17,25 @@ app.use(express.json());
 
 // Load apps configuration (mutable in memory, persisted on write)
 let appsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'apps.json'), 'utf8'));
+
+// Load news data
+const NEWS_FILE = path.join(__dirname, 'news.json');
+let newsData = { items: [] };
+try { newsData = JSON.parse(fs.readFileSync(NEWS_FILE, 'utf8')); } catch {}
+
+function saveNews() {
+  fs.writeFileSync(NEWS_FILE, JSON.stringify(newsData, null, 2));
+}
+
+function addNewsItem(type, title, appId = null) {
+  const item = { id: Date.now().toString(), type, title, date: new Date().toISOString() };
+  if (appId) item.appId = appId;
+  newsData.items.unshift(item);
+  // Keep max 100 items
+  if (newsData.items.length > 100) newsData.items = newsData.items.slice(0, 100);
+  saveNews();
+  return item;
+}
 
 // Serve static files from frontend build (when deployed via cPanel)
 const frontendBuildPath = path.join(__dirname, '../frontend/build');
@@ -35,6 +58,10 @@ app.get('/api/apps', (req, res) => {
 app.get('/api/categories', (req, res) => {
   const categories = [...new Set(appsData.apps.map(app => app.category))].sort();
   res.json(categories);
+});
+
+app.get('/api/news', (req, res) => {
+  res.json(newsData.items.slice(0, 20));
 });
 
 app.post('/api/generate-script', (req, res) => {
@@ -259,6 +286,7 @@ app.put('/admin/apps/:id', requireAuth, (req, res) => {
     return res.status(404).json({ error: 'App not found' });
   }
 
+  const oldUrl = appsData.apps[appIndex].url;
   appsData.apps[appIndex] = {
     id: req.params.id,
     name: name || appsData.apps[appIndex].name,
@@ -267,6 +295,11 @@ app.put('/admin/apps/:id', requireAuth, (req, res) => {
     type: type || appsData.apps[appIndex].type,
     args: args !== undefined ? args : appsData.apps[appIndex].args,
   };
+
+  // Auto-create news item when download URL changes
+  if (url && url !== oldUrl) {
+    addNewsItem('app_update', `${appsData.apps[appIndex].name} updated`, req.params.id);
+  }
 
   fs.writeFileSync(path.join(__dirname, 'apps.json'), JSON.stringify(appsData, null, 2));
   res.json({ success: true, app: appsData.apps[appIndex] });
@@ -289,6 +322,55 @@ app.get('/admin/settings', requireAuth, (req, res) => {
     adminPassword: process.env.ADMIN_PASSWORD ? 'SET' : 'admin123',
     updateFrequency: process.env.UPDATE_FREQUENCY || 'on-launch',
   });
+});
+
+// ── Admin News ────────────────────────────────────────────────────
+
+app.get('/admin/news', requireAuth, (req, res) => {
+  res.json(newsData.items);
+});
+
+app.post('/admin/news', requireAuth, (req, res) => {
+  const { title, body } = req.body;
+  if (!title || !title.trim()) return res.status(400).json({ error: 'Title is required' });
+  const item = addNewsItem('manual', title.trim(), null);
+  if (body) item.body = body.trim();
+  saveNews();
+  res.json({ success: true, item });
+});
+
+app.delete('/admin/news/:id', requireAuth, (req, res) => {
+  const before = newsData.items.length;
+  newsData.items = newsData.items.filter(i => i.id !== req.params.id);
+  if (newsData.items.length === before) return res.status(404).json({ error: 'Item not found' });
+  saveNews();
+  res.json({ success: true });
+});
+
+// ── Winget Update Check ───────────────────────────────────────────
+
+app.get('/admin/check-updates', requireAuth, async (req, res) => {
+  if (!winget) return res.status(503).json({ error: 'Update checker unavailable' });
+  try {
+    const results = await winget.checkAllUpdates(appsData.apps);
+    res.json(results);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/admin/apply-update/:id', requireAuth, (req, res) => {
+  const { newUrl, newVersion, newType } = req.body;
+  const appIndex = appsData.apps.findIndex(a => a.id === req.params.id);
+  if (appIndex === -1) return res.status(404).json({ error: 'App not found' });
+
+  appsData.apps[appIndex].url = newUrl;
+  if (newType) appsData.apps[appIndex].type = newType;
+  fs.writeFileSync(path.join(__dirname, 'apps.json'), JSON.stringify(appsData, null, 2));
+
+  addNewsItem('app_update', `${appsData.apps[appIndex].name} updated to v${newVersion}`, req.params.id);
+
+  res.json({ success: true, app: appsData.apps[appIndex] });
 });
 
 // ── Fallback to React app ─────────────────────────────────────────

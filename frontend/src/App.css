@@ -233,6 +233,105 @@ body {
   padding: 2.5rem 0 3rem;
 }
 
+/* ── News section ── */
+.news-section {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.news-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.6rem 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--text-secondary);
+  transition: background 0.12s;
+}
+
+.news-toggle:hover { background: var(--bg-tertiary); }
+
+.news-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+.news-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(0, 184, 212, 0.6);
+}
+
+.news-count {
+  background: rgba(0, 184, 212, 0.15);
+  color: var(--accent-primary);
+  border: 1px solid rgba(0, 184, 212, 0.25);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.05rem 0.45rem;
+  border-radius: 8px;
+}
+
+.news-chevron {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.news-list {
+  border-top: 1px solid var(--border-color);
+  padding: 0.3rem 0;
+}
+
+.news-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  transition: background 0.1s;
+}
+
+.news-item:hover { background: var(--bg-tertiary); }
+
+.news-type-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.news-type-app_update { background: var(--accent-primary); }
+.news-type-manual     { background: #4ade80; }
+
+.news-date {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  min-width: 62px;
+  flex-shrink: 0;
+}
+
+.news-title-text {
+  color: var(--text-primary);
+  font-size: 0.85rem;
+}
+
 /* ── Step labels ── */
 .step-label {
   font-size: 0.72rem;
