@@ -9,6 +9,22 @@ yarn.lock
 .env
 .env.local
 .env.*.local
+.env.production
+backend/.env*
+!backend/.env.example
+
+# Claude session data
+.claude/
+
+# Archives and temp files
+*.zip
+*.tar.gz
+tmp-extract/
+
+# cPanel build artifacts (built frontend deployed directly)
+asset-manifest.json
+index.html
+static/
 
 # Production builds
 frontend/build/

@@ -183,7 +183,6 @@ function Admin() {
             </button>
           </form>
 
-          <p className="hint">Default password: <code>admin123</code></p>
         </div>
       </div>
     );

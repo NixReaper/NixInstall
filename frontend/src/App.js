@@ -121,10 +121,10 @@ function App() {
             <img src="/logo.png" alt="NixInstall" className="header-logo" />
           </div>
           <nav className="header-nav">
-            <a href="/" className="nav-link active">Home</a>
-            <a href="/help" className="nav-link">Help</a>
-            <a href="/request" className="nav-link">Request an App</a>
-            <a href="/about" className="nav-link">About</a>
+            <button className="nav-link nav-btn active">Home</button>
+            <button className="nav-link nav-btn" onClick={() => window.navigateTo('/help')}>Help</button>
+            <button className="nav-link nav-btn" onClick={() => window.navigateTo('/request')}>Request an App</button>
+            <button className="nav-link nav-btn" onClick={() => window.navigateTo('/about')}>About</button>
           </nav>
           <div className="header-search">
             <input

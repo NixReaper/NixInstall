@@ -1,0 +1,524 @@
+{
+  "apps": [
+    {
+      "id": "chrome",
+      "name": "Google Chrome",
+      "category": "Web Browsers",
+      "url": "https://dl.google.com/chrome/install/ChromeSetup.exe",
+      "type": "exe",
+      "args": "/silent /install"
+    },
+    {
+      "id": "firefox",
+      "name": "Mozilla Firefox",
+      "category": "Web Browsers",
+      "url": "https://download.mozilla.org/?product=firefox-latest&os=win64&lang=en-US",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "edge",
+      "name": "Microsoft Edge",
+      "category": "Web Browsers",
+      "url": "https://msedge.sfx.ms/releases/download?platform=Windows&arch=x64&release=Stable&version=latest",
+      "type": "exe",
+      "args": "/silent /install"
+    },
+    {
+      "id": "brave",
+      "name": "Brave Browser",
+      "category": "Web Browsers",
+      "url": "https://github.com/brave/brave-browser/releases/download/latest/BraveSetup-Latest.exe",
+      "type": "exe",
+      "args": ""
+    },
+    {
+      "id": "opera",
+      "name": "Opera Browser",
+      "category": "Web Browsers",
+      "url": "https://get.opera.com/computer/",
+      "type": "exe",
+      "args": "/silent /install"
+    },
+    {
+      "id": "vivaldi",
+      "name": "Vivaldi Browser",
+      "category": "Web Browsers",
+      "url": "https://downloads.vivaldi.com/stable/Vivaldi.7.0.exe",
+      "type": "exe",
+      "args": "/silent /install"
+    },
+    {
+      "id": "zoom",
+      "name": "Zoom",
+      "category": "Messaging",
+      "url": "https://zoom.us/client/latest/ZoomInstaller.exe",
+      "type": "exe",
+      "args": "/silent"
+    },
+    {
+      "id": "discord",
+      "name": "Discord",
+      "category": "Messaging",
+      "url": "https://discordapp.com/api/downloads/distributions/app/installers/latest?channel=stable&platform=win&arch=x86",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "teams",
+      "name": "Microsoft Teams",
+      "category": "Messaging",
+      "url": "https://go.microsoft.com/fwlink/?LinkId=2187327&culture=en-us&country=us",
+      "type": "exe",
+      "args": "/quiet /norestart"
+    },
+    {
+      "id": "slack",
+      "name": "Slack",
+      "category": "Messaging",
+      "url": "https://downloads.slack-edge.com/releases/windows/3.3.8/x64/SlackSetup.exe",
+      "type": "exe",
+      "args": "-s"
+    },
+    {
+      "id": "thunderbird",
+      "name": "Mozilla Thunderbird",
+      "category": "Messaging",
+      "url": "https://download.mozilla.org/?product=thunderbird-latest&os=win64&lang=en-US",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "pidgin",
+      "name": "Pidgin",
+      "category": "Messaging",
+      "url": "https://sourceforge.net/projects/pidgin/files/Pidgin/2.14.14/pidgin-2.14.14-offline.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "vlc",
+      "name": "VLC Media Player",
+      "category": "Media",
+      "url": "https://get.videolan.org/vlc/last/win64/vlc-3.0.20-win64.exe",
+      "type": "exe",
+      "args": "/L=1033 /S"
+    },
+    {
+      "id": "spotify",
+      "name": "Spotify",
+      "category": "Media",
+      "url": "https://download.spotify.com/SpotifySetup.exe",
+      "type": "exe",
+      "args": "/silent"
+    },
+    {
+      "id": "foobar2000",
+      "name": "foobar2000",
+      "category": "Media",
+      "url": "https://www.foobar2000.org/download.html",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "aimp",
+      "name": "AIMP",
+      "category": "Media",
+      "url": "https://www.aimp.ru/?do=download",
+      "type": "exe",
+      "args": "/silent"
+    },
+    {
+      "id": "musicbee",
+      "name": "MusicBee",
+      "category": "Media",
+      "url": "https://getmusicbee.com/downloads/",
+      "type": "exe",
+      "args": "/SILENT"
+    },
+    {
+      "id": "audacity",
+      "name": "Audacity",
+      "category": "Media",
+      "url": "https://github.com/audacity/audacity/releases/download/v3.4.1/audacity-3.4.1-x64.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "handbrake",
+      "name": "HandBrake",
+      "category": "Media",
+      "url": "https://github.com/HandBrake/HandBrake/releases/download/1.7.0/HandBrake-1.7.0-x86_64-Win_GUI.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "obs",
+      "name": "OBS Studio",
+      "category": "Media",
+      "url": "https://github.com/obsproject/obs-studio/releases/download/29.1.3/OBS-Studio-29.1.3-Full-Installer-x64.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "gimp",
+      "name": "GIMP",
+      "category": "Imaging",
+      "url": "https://download.gimp.org/mirror/pub/gimp/v2.10/windows/gimp-2.10.36-setup.exe",
+      "type": "exe",
+      "args": "/S /D=C:\\Program Files\\GIMP 2"
+    },
+    {
+      "id": "krita",
+      "name": "Krita",
+      "category": "Imaging",
+      "url": "https://download.krita.org/download/krita-x64-5.3.0-setup.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "blender",
+      "name": "Blender",
+      "category": "Imaging",
+      "url": "https://www.blender.org/download/release/Blender4.0/blender-4.0.1-windows-x64.msi",
+      "type": "msi",
+      "args": "/quiet"
+    },
+    {
+      "id": "paintdotnet",
+      "name": "Paint.NET",
+      "category": "Imaging",
+      "url": "https://github.com/paintdotnet/release/releases/download/v5.112.9563.32325/paintdotnet.5.112.9563.32325.winmsi.x64.exe",
+      "type": "exe",
+      "args": "/SILENT"
+    },
+    {
+      "id": "inkscape",
+      "name": "Inkscape",
+      "category": "Imaging",
+      "url": "https://inkscape.org/release/inkscape-1.4.3/windows/64-bit/",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "irfanview",
+      "name": "IrfanView",
+      "category": "Imaging",
+      "url": "https://www.irfanview.com/",
+      "type": "exe",
+      "args": "/silent /group=1 /assoc=1"
+    },
+    {
+      "id": "greenshot",
+      "name": "Greenshot",
+      "category": "Imaging",
+      "url": "https://sourceforge.net/projects/greenshot/files/Greenshot/RELEASE-1.3/Greenshot-RELEASE-1.3.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "sharex",
+      "name": "ShareX",
+      "category": "Imaging",
+      "url": "https://github.com/ShareX/ShareX/releases/download/v15.1.0/ShareX-15.1.0-portable.zip",
+      "type": "zip",
+      "args": ""
+    },
+    {
+      "id": "libreoffice",
+      "name": "LibreOffice",
+      "category": "Documents",
+      "url": "https://www.libreoffice.org/download/libreoffice/",
+      "type": "msi",
+      "args": "/quiet"
+    },
+    {
+      "id": "openoffice",
+      "name": "OpenOffice",
+      "category": "Documents",
+      "url": "https://sourceforge.net/projects/openofficeorg/files/Apache OpenOffice/4.1.16/Apache_OpenOffice_4.1.16_Win_x86_install_en-US.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "foxitreader",
+      "name": "Foxit Reader",
+      "category": "Documents",
+      "url": "https://www.foxit.com/downloads/",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "sumatrapdf",
+      "name": "SumatraPDF",
+      "category": "Documents",
+      "url": "https://github.com/sumatrapdfreader/sumatrapdf/releases/download/v3.6.1/SumatraPDF-3.6.1-64-install.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "cutepdf",
+      "name": "CutePDF Writer",
+      "category": "Documents",
+      "url": "https://www.cutepdf.com/Products/CutePDF/writer.asp",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "malwarebytes",
+      "name": "Malwarebytes",
+      "category": "Security",
+      "url": "https://downloads.malwarebytes.com/file/mb5-setup",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "avast",
+      "name": "Avast Free Antivirus",
+      "category": "Security",
+      "url": "https://install.avast.com/avast-online.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "avg",
+      "name": "AVG Free Antivirus",
+      "category": "Security",
+      "url": "https://download.avg.com/filedir/inst/avg/AVG_tuy_stf_en_2024_web_x64_11881.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "spybot",
+      "name": "Spybot 2",
+      "category": "Security",
+      "url": "https://www.safer-networking.org/spybot/",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "keepass",
+      "name": "KeePass 2",
+      "category": "Security",
+      "url": "https://sourceforge.net/projects/keepass/files/KeePass%202.x/2.54.1/KeePass-2.54.1-Setup.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "dropbox",
+      "name": "Dropbox",
+      "category": "Online Storage",
+      "url": "https://www.dropbox.com/download?plat=win",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "googledrive",
+      "name": "Google Drive for Desktop",
+      "category": "Online Storage",
+      "url": "https://dl.google.com/drive-file-stream/GoogleDriveSetup.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "onedrive",
+      "name": "OneDrive",
+      "category": "Online Storage",
+      "url": "https://oneclient.sfx.ms/Download/Installers/latest/OneDriveSetup.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "qbittorrent",
+      "name": "qBittorrent",
+      "category": "File Sharing",
+      "url": "https://www.qbittorrent.org/download.php",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "vscode",
+      "name": "Visual Studio Code",
+      "category": "Developer Tools",
+      "url": "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64",
+      "type": "exe",
+      "args": "/verysilent /mergetasks=!runcode"
+    },
+    {
+      "id": "python3",
+      "name": "Python 3",
+      "category": "Developer Tools",
+      "url": "https://www.python.org/ftp/python/3.11.0/python-3.11.0-amd64.exe",
+      "type": "exe",
+      "args": "/quiet InstallAllUsers=1 PrependPath=1"
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "category": "Developer Tools",
+      "url": "https://github.com/git-for-windows/git/releases/download/v2.42.0.windows.1/Git-2.42.0-64-bit.exe",
+      "type": "exe",
+      "args": "/VERYSILENT /NORESTART"
+    },
+    {
+      "id": "nodejs",
+      "name": "Node.js LTS",
+      "category": "Developer Tools",
+      "url": "https://nodejs.org/dist/v18.17.1/node-v18.17.1-x64.msi",
+      "type": "msi",
+      "args": "/quiet"
+    },
+    {
+      "id": "notepadplusplus",
+      "name": "Notepad++",
+      "category": "Developer Tools",
+      "url": "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.5.7/npp.8.5.7.Installer.x64.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "filezilla",
+      "name": "FileZilla",
+      "category": "Developer Tools",
+      "url": "https://download.filezilla-project.org/client/FileZilla_3.65.0_win64_setup.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "winscp",
+      "name": "WinSCP",
+      "category": "Developer Tools",
+      "url": "https://winscp.net/download/WinSCP-6.5.6-Setup.exe",
+      "type": "exe",
+      "args": "/S /D=C:\\Program Files (x86)\\WinSCP"
+    },
+    {
+      "id": "putty",
+      "name": "PuTTY",
+      "category": "Developer Tools",
+      "url": "https://the.earth.li/~sgtatham/putty/latest/w64/putty-64bit-0.78-installer.msi",
+      "type": "msi",
+      "args": "/quiet"
+    },
+    {
+      "id": "docker",
+      "name": "Docker Desktop",
+      "category": "Developer Tools",
+      "url": "https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe",
+      "type": "exe",
+      "args": "install --quiet --accept-license"
+    },
+    {
+      "id": "7zip",
+      "name": "7-Zip",
+      "category": "Compression",
+      "url": "https://www.7-zip.org/a/7z2301-x64.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "winrar",
+      "name": "WinRAR",
+      "category": "Compression",
+      "url": "https://www.rarlab.com/rar/winrar-x64-701.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "peazip",
+      "name": "PeaZip",
+      "category": "Compression",
+      "url": "https://github.com/peazip/PeaZip/releases/download/9.7.0/peazip-9.7.0.WIN64-portable.zip",
+      "type": "zip",
+      "args": ""
+    },
+    {
+      "id": "teamviewer",
+      "name": "TeamViewer",
+      "category": "Utilities",
+      "url": "https://download.teamviewer.com/download/TeamViewer_Setup.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "anydesk",
+      "name": "AnyDesk",
+      "category": "Utilities",
+      "url": "https://download.anydesk.com/AnyDesk.exe",
+      "type": "exe",
+      "args": ""
+    },
+    {
+      "id": "ccleaner",
+      "name": "CCleaner",
+      "category": "Utilities",
+      "url": "https://download.ccleaner.com/ccsetup639.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "everything",
+      "name": "Everything Search",
+      "category": "Utilities",
+      "url": "https://www.voidtools.com/Everything-1.4.1.1024.x64-Setup.exe",
+      "type": "exe",
+      "args": "-install -s"
+    },
+    {
+      "id": "windirstat",
+      "name": "WinDirStat",
+      "category": "Utilities",
+      "url": "https://sourceforge.net/projects/windirstat/files/windirstat/1.1.2%20installers/windirstat1_1_2_setup.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "teracopy",
+      "name": "TeraCopy",
+      "category": "Utilities",
+      "url": "https://www.codesector.com/files/teracopy.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "revo",
+      "name": "Revo Uninstaller",
+      "category": "Utilities",
+      "url": "https://download.revouninstaller.com/releases/revo-uninstaller-freeware.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "powertoys",
+      "name": "Windows PowerToys",
+      "category": "Utilities",
+      "url": "https://github.com/microsoft/PowerToys/releases/download/v0.73.0/PowerToysSetup-0.73.0-x64.exe",
+      "type": "exe",
+      "args": "/quiet"
+    },
+    {
+      "id": "steam",
+      "name": "Steam",
+      "category": "Other",
+      "url": "https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe",
+      "type": "exe",
+      "args": "/S"
+    },
+    {
+      "id": "epicgames",
+      "name": "Epic Games Launcher",
+      "category": "Other",
+      "url": "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi",
+      "type": "msi",
+      "args": "/quiet"
+    },
+    {
+      "id": "evernote",
+      "name": "Evernote",
+      "category": "Other",
+      "url": "https://cdn1.evernote.com/win-releases/Evernote-11.18.1.exe",
+      "type": "exe",
+      "args": "/S"
+    }
+  ]
+}

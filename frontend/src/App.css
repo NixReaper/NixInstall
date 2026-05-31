@@ -120,6 +120,13 @@ body {
   background: rgba(0, 184, 212, 0.1);
 }
 
+.nav-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
 .header-search {
   min-width: 180px;
   max-width: 280px;
