@@ -83,6 +83,7 @@ body {
   width: auto;
   display: block;
   flex-shrink: 0;
+  padding-bottom: 0.85rem;
 }
 
 .header-brand-text p {
