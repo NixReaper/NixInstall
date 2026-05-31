@@ -15,11 +15,12 @@
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # Proxy API, admin, and health requests to Node.js backend on port 5000
+  # Proxy API and admin API requests to Node.js backend on port 3000
+  # Note: bare /admin is intentionally excluded — served as React SPA by Apache
   RewriteCond %{REQUEST_URI} ^/api/ [OR]
-  RewriteCond %{REQUEST_URI} ^/admin [OR]
+  RewriteCond %{REQUEST_URI} ^/admin/ [OR]
   RewriteCond %{REQUEST_URI} ^/health$
-  RewriteRule ^(.*)$ http://127.0.0.1:5000/$1 [P,L,QSA]
+  RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [P,L,QSA]
 
   # React client-side routing — serve index.html for everything else
   RewriteRule ^ /index.html [QSA,L]
